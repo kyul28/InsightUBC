@@ -1,9 +1,51 @@
 # CPSC 310 Project Repository
 
-This repository contains starter code for the class project.
-Please keep your repository private.
+InsightUBC is a full-stack web application developed as part of the Introduction to Software Engineering course at UBC. The project enables users to query metadata related to the UBC campus, such as information about past courses, averages, buildings, and rooms. The backend is built using Node.js and TypeScript, while the frontend utilizes React. This repository contains all the code and resources necessary to build and run the application.
 
-For information about the project, autotest, and the checkpoints, see the [course webpage](https://sites.google.com/view/ubc-cpsc310-20w2-intro-to-se).
+For information about the project, autotest, and the checkpoints, see the [specifications page](https://sites.google.com/view/ubc-cpsc310-20w2-intro-to-se/project/specification?authuser=0).
+
+Below is the EBNF grammar used in the development of this project:
+
+QUERY ::='{'BODY ', ' OPTIONS (', ' TRANSFORMATIONS)? '}' 
+
+BODY ::= 'WHERE:{' (FILTER)? '}'
+OPTIONS ::= 'OPTIONS:{' COLUMNS (', ' SORT)? '}'
+TRANSFORMATIONS ::= 'TRANSFORMATIONS: {' GROUP ', ' APPLY '}' 
+
+FILTER ::= LOGICCOMPARISON | MCOMPARISON | SCOMPARISON | NEGATION
+LOGICCOMPARISON ::= LOGIC ':[{' FILTER ('}, {' FILTER )* '}]'  
+MCOMPARISON ::= MCOMPARATOR ':{' mkey ':' number '}'  
+SCOMPARISON ::= 'IS:{' skey ':' [*]? inputstring [*]? '}'  // Asterisks should act as wildcards. Optional.
+NEGATION ::= 'NOT :{' FILTER '}'
+LOGIC ::= 'AND' | 'OR'
+MCOMPARATOR ::= 'LT' | 'GT' | 'EQ' 
+
+COLUMNS ::= 'COLUMNS:[' ANYKEY (',' ANYKEY)* ']'
+SORT ::= 'ORDER: ' ('{ dir:'  DIRECTION ', keys: [ ' ANYKEY (',' ANYKEY)* ']}') | ANYKEY
+DIRECTION ::= 'UP' | 'DOWN'  
+ANYKEY ::= key | applykey 
+
+GROUP ::= 'GROUP: [' (key ',')* key ']'                                                          
+APPLY ::= 'APPLY: [' (APPLYRULE (', ' APPLYRULE )* )? ']'  
+APPLYRULE ::= '{' applykey ': {' APPLYTOKEN ':' key '}}'
+APPLYTOKEN ::= 'MAX' | 'MIN' | 'AVG' | 'COUNT' | 'SUM' 
+
+key ::= mkey | skey
+mkey ::= idstring '_' mfield
+skey ::= idstring '_' sfield
+mfield ::= 'avg' | 'pass' | 'fail' | 'audit' | 'year' | 'lat' | 'lon' | 'seats' 
+sfield ::=  'dept' | 'id' | 'instructor' | 'title' | 'uuid' |    'fullname' | 'shortname' | 'number' | 
+           'name' | 'address' | 'type' | 'furniture' | 'href'  
+idstring ::= [^_]+ // One or more of any character, except underscore.
+inputstring ::= [^*]* // zero or more of any character except asterisk.
+applykey ::= [^_]+ // one or more of any character except underscore.
+
+- WHERE defines which sections should be included in the results.
+- COLUMNS defines which keys should be included in each result.
+- ORDER defines what order the results should be in
+
+
+
 
 ## Configuring your environment
 
