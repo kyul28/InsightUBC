@@ -1,0 +1,269 @@
+{
+    "query1":{"WHERE": {"IS": {"courses_dept": "cpsc"} }, "OPTIONS": {"COLUMNS": ["courses_dept", "courses_id"], "ORDER": "courses_id"} },
+    "queryEmptyWhereRooms": {
+        "WHERE": {
+
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_lat",
+                "rooms_shortname"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": [
+                    "rooms_lat",
+                    "rooms_shortname"
+                ]
+            }
+        }
+    },
+    "queryValidBodyANDLG": {
+        "WHERE": {
+            "AND": [
+                {
+                    "LT": {
+                        "courses_year": 1901
+                    }
+                },
+                {
+                    "GT": {
+                        "courses_pass": 1000
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_avg",
+                "courses_dept",
+                "courses_id",
+                "courses_year"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": [
+                    "courses_avg"
+                ]
+            }
+        }
+    },
+    "queryValidBodyORorder": {
+        "WHERE": {
+            "OR": [
+                {
+                    "EQ": {
+                        "courses_year": 2017
+                    }
+                },
+                {
+                    "LT": {
+                        "courses_pass": 1
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_audit",
+                "courses_fail",
+                "courses_instructor",
+                "courses_uuid"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": [
+                    "courses_audit",
+                    "courses_fail",
+                    "courses_instructor"
+                ]
+            }
+        }
+    },
+    "queryNoBodyAllGroup": {
+        "WHERE": {},
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "countTitle",
+                "maxAvg",
+                "minPass",
+                "sumFail",
+                "avgYear"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": [
+                    "courses_dept"
+                ]
+            }
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "courses_dept"
+            ],
+            "APPLY": [
+                {
+                    "countTitle": {
+                        "COUNT": "courses_title"
+                    }
+                },
+                {
+                    "maxAvg": {
+                        "MAX": "courses_avg"
+                    }
+                },
+                {
+                    "minPass": {
+                        "MIN": "courses_pass"
+                    }
+                },
+                {
+                    "sumFail": {
+                        "SUM": "courses_fail"
+                    }
+                },
+                {
+                    "avgYear": {
+                        "AVG": "courses_year"
+                    }
+                }
+            ]
+        }
+    },
+    "queryValidRoomsISGT": {
+        "WHERE": {
+            "AND": [
+                {
+                    "IS": {
+                        "rooms_furniture": "*Tables*"
+                    }
+                },
+                {
+                    "GT": {
+                        "rooms_seats": 300
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_shortname",
+                "maxSeats"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": [
+                    "maxSeats"
+                ]
+            }
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "rooms_shortname"
+            ],
+            "APPLY": [
+                {
+                    "maxSeats": {
+                        "MAX": "rooms_seats"
+                    }
+                }
+            ]
+        }
+    },
+    "queryInvalidNOT": {
+        "WHERE": {
+            "NOT": {
+                "OR": [
+                    {
+                        "NOT": {
+                            "IS": {
+                                "courses_avg": "90"
+                            }
+                        }
+                    },
+                    {
+                        "NOT": {
+                            "GT": {
+                                "courses_dept": 200
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_id",
+                "courses_instructor",
+                "courses_pass"
+            ],
+            "ORDER": "courses_fail"
+        }
+    },
+    "queryInvalidORNOT": {
+        "WHERE": {
+            "OR": [
+                {
+                    "NOT": {
+                        "IS": {
+                            "courses_avg": "90"
+                        }
+                    }
+                },
+                {
+                    "NOT": {
+                        "GT": {
+                            "courses_dept": 200
+                        }
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_id",
+                "courses_instructor",
+                "courses_pass"
+            ],
+            "ORDER": "courses_fail"
+        }
+    },
+    "queryInvalidRoomsAND": {
+        "WHERE": {
+            "AND": [
+                {
+                    "GT": {
+                        "rooms_fullname": "wefee"
+                    }
+                },
+                {
+                    "NOT": {
+                        "EQ": {
+                            "rooms_lon": 35
+                        }
+                    }
+                },
+                {
+                    "IS": {
+                        "rooms_name": "**"
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_address",
+                "rooms_fullname"
+            ],
+            "ORDER": {
+                "dir": "UP",
+                "keys": [
+                    "rooms_fullname",
+                    "rooms_name",
+                    "rooms_seats"
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "query1": "simple query IS comparison for department with two columns and old order syntax",
+    "queryEmptyWhereRooms": "simple query with empty WHERE for rooms",
+    "queryValidBodyANDLG": "AND courses query with 4 columns",
+    "queryValidBodyORorder": "OR courses query with valid order",
+    "queryNoBodyAllGroup": "Empty WHERE courses query with all Group",
+    "queryValidRoomsISGT": "rooms query with transformations",
+    "queryInvalidNOT": "courses query with two NOT inside a NOT filter",
+    "queryInvalidORNOT": "courses query with two NOT inside an OR filter",
+    "queryInvalidRoomsAND": "rooms query with three filters inside AND"
+}
